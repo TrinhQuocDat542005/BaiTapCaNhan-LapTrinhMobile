@@ -1,0 +1,8 @@
+<resources>
+    <string name="back_button">Nút quay lại</string>
+    <string name="edit_button">Nút chỉnh sửa</string>
+    <string name="avatar_desc">Ảnh đại diện</string>
+    <string name="johan_name">Trịnh Quốc Đạt</string>
+    <string name="johan_location">056205011070, Lập Trình Mobile</string>
+    <string name="app_name">My Application</string>
+</resources>
