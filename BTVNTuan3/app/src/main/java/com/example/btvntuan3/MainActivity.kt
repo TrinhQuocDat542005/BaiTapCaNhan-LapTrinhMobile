@@ -32,16 +32,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun AppNavigation() {
-    // Tạo một NavController để quản lý việc chuyển màn hình
+
     val navController = rememberNavController()
 
-    // NavHost là nơi chứa tất cả các màn hình (destination)
     NavHost(navController = navController, startDestination = "main_screen") {
-        // Định nghĩa màn hình chính
         composable("main_screen") {
             MainScreen(navController = navController)
         }
-        // Định nghĩa các màn hình con
         composable("text_screen") {
             TextScreen()
         }
