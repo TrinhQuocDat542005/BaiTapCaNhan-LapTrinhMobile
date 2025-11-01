@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "81719563193",
+    "project_id": "thuchanh-ab355",
+    "storage_bucket": "thuchanh-ab355.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81719563193:android:f89433b933b1cf9b5b9c68",
+        "android_client_info": {
+          "package_name": "com.example.btvn01"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81719563193-rf56v4ilh013acst57jgkn1p4r58u77r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEJXqMR04DCjdwwCEeQOJIgFha95SIlWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81719563193-rf56v4ilh013acst57jgkn1p4r58u77r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81719563193:android:a3b33ec26a0301e05b9c68",
+        "android_client_info": {
+          "package_name": "com.example.thuchanhtl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "81719563193-rf56v4ilh013acst57jgkn1p4r58u77r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEJXqMR04DCjdwwCEeQOJIgFha95SIlWU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "81719563193-rf56v4ilh013acst57jgkn1p4r58u77r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
