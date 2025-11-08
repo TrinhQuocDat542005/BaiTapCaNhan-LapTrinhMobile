@@ -1,75 +1,87 @@
+// Trong file: MainActivity.kt
 package com.example.uthsmarttasks
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.LaunchedEffect
+import androidx.activity.viewModels
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.uthsmarttasks.ui.screens.LoginScreen
-import com.example.uthsmarttasks.ui.screens.ProfileScreen
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.FirebaseApp
+import androidx.navigation.navArgument
+import com.example.uthsmarttasks.ui.Screen // 👈 THÊM IMPORT
+import com.example.uthsmarttasks.ui.screens.* import com.example.uthsmarttasks.ui.theme.UTHSmartTasksTheme
+import com.example.uthsmarttasks.viewmodel.TaskViewModel
 import com.google.firebase.auth.FirebaseAuth
-import com.example.uthsmarttasks.ui.screens.ProductScreen
 
 class MainActivity : ComponentActivity() {
+
     private lateinit var auth: FirebaseAuth
-    private lateinit var googleSignInClient: GoogleSignInClient
+    private val taskViewModel by viewModels<TaskViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        FirebaseApp.initializeApp(this)
         auth = FirebaseAuth.getInstance()
 
-        // Cấu hình Google Sign-In
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
-
         setContent {
-            val navController = rememberNavController()
+            UTHSmartTasksTheme {
+                val navController = rememberNavController()
 
-            // Nếu user đã đăng nhập sẵn -> vào profile luôn
-            val startDestination = if (auth.currentUser != null) "profile" else "login"
-
-            NavHost(navController = navController, startDestination = startDestination) {
-
-                composable("login") {
-                    LoginScreen(
-                        navController = navController,
-                        auth = auth,
-                        googleSignInClient = googleSignInClient
-                    )
+                // Quyết định màn hình bắt đầu
+                val startDestination = if (auth.currentUser != null) {
+                    Screen.TaskList.route
+                } else {
+                    Screen.Login.route
                 }
 
-                composable("profile") {
-                    val user = auth.currentUser
-                    if (user == null) {
-                        // Nếu chưa login (ví dụ: vừa logout), quay lại login
-                        LaunchedEffect(Unit) {
-                            navController.navigate("login") {
-                                popUpTo("profile") { inclusive = true }
+                NavHost(navController = navController, startDestination = startDestination) {
+                    // Màn hình Login
+                    composable(Screen.Login.route) {
+                        LoginScreen( // ✅ SỬA 1: Chỉ truyền onLoginSuccess
+                            onLoginSuccess = {
+                                navController.navigate(Screen.TaskList.route) {
+                                    popUpTo(Screen.Login.route) {
+                                        this.inclusive = true // 👈 ✅ SỬA 2: Thêm "this."
+                                    }
+                                }
                             }
-                        }
-                    } else {
-                        ProfileScreen(
-                            user = user,
+                        )
+                    }
+
+                    // Màn hình Danh sách Task (Trang chủ MỚI)
+                    composable(Screen.TaskList.route) {
+                        TaskListScreen(
+                            viewModel = taskViewModel,
                             navController = navController
                         )
                     }
-                }
-                composable("product") {
-                    ProductScreen(navController = navController)
-                }
 
+                    // Màn hình Profile (Trang con)
+                    composable(Screen.Profile.route) {
+                        ProfileScreen(
+                            user = auth.currentUser,
+                            navController = navController
+                        )
+                    }
+
+                    // Màn hình Chi tiết Task
+                    composable(
+                        route = Screen.TaskDetail.route + "/{taskId}",
+                        arguments = listOf(navArgument("taskId") { type = NavType.StringType })
+                    ) { backStackEntry ->
+                        val taskId = backStackEntry.arguments?.getString("taskId")
+                        if (taskId != null) {
+                            TaskDetailScreen(
+                                taskId = taskId,
+                                viewModel = taskViewModel,
+                                navController = navController
+                            )
+                        }
+                    }
+                }
             }
         }
     }
-
 }
