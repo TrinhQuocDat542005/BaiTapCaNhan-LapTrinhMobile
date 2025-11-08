@@ -8,9 +8,9 @@ data class Coin(
     val name: String,
     val image: String,
 
-    @field:Json(name = "current_price")
+    @Json(name = "current_price")
     val currentPrice: Double?,
 
-    @field:Json(name = "price_change_percentage_24h")
+    @Json(name = "price_change_percentage_24h")
     val priceChangePercentage24h: Double?
 )

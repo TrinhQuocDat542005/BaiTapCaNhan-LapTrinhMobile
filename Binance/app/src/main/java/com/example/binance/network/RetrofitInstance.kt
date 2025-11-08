@@ -8,21 +8,17 @@ import retrofit2.converter.moshi.MoshiConverterFactory // Dùng Moshi, không ph
 
 object RetrofitInstance {
 
-    // 1. Tạo một đối tượng Moshi để nó hiểu code Kotlin
     private val moshi = Moshi.Builder()
         .add(KotlinJsonAdapterFactory())
         .build()
 
-    // 2. Xây dựng Retrofit
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://api.coingecko.com/") // Đây là link API gốc
-            // 3. Dùng MoshiConverterFactory và truyền moshi object vào
+            .baseUrl("https://api.coingecko.com/")
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
 
-    // 4. Tạo Api service
     val api: CoinGeckoApi by lazy {
         retrofit.create(CoinGeckoApi::class.java)
     }

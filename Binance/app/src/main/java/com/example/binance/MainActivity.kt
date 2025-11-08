@@ -14,21 +14,15 @@ import com.example.binance.ui.theme.BinanceTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Bỏ enableEdgeToEdge() đi cũng được ạ
         setContent {
             BinanceTheme {
-                // Mình dùng Surface làm nền
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // 🚀 GỌI MÀN HÌNH CHÍNH Ở ĐÂY!
                     HomeScreen()
                 }
             }
         }
     }
 }
-
-// Mấy hàm Greeting() và GreetingPreview() ở dưới anh xóa đi cũng được,
-// mình không dùng đến nó nữa ạ.
